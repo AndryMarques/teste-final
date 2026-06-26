@@ -1,0 +1,15 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=GamePadDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;"
+  },
+  "Igdb": {
+    "ClientId": "COLE_AQUI_SEU_CLIENT_ID",
+    "ClientSecret": "COLE_AQUI_SEU_CLIENT_SECRET"
+  }
+}
