@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using GamePadAPI.Services;
 using Newtonsoft.Json;
 
 namespace GamePadAPI.Controllers
@@ -11,12 +12,21 @@ namespace GamePadAPI.Controllers
     public class IgdbController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private const string ClientId = "d85pv4u80y6424iy6rl8b78q5fqqff"; 
-        private const string AccessToken = "snp5t0qnyouxa9useaxzvql0ipidpe"; 
+        private readonly IgdbTokenService _igdbTokenService;
 
-        public IgdbController(IHttpClientFactory httpClientFactory)
+        public IgdbController(IHttpClientFactory httpClientFactory, IgdbTokenService igdbTokenService)
         {
             _httpClientFactory = httpClientFactory;
+            _igdbTokenService = igdbTokenService;
+        }
+
+        private async Task<HttpClient> CreateIgdbClientAsync()
+        {
+            var accessToken = await _igdbTokenService.GetAccessTokenAsync();
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Add("Client-ID", _igdbTokenService.ClientId);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            return client;
         }
 
         [HttpGet("games")]
@@ -35,9 +45,7 @@ namespace GamePadAPI.Controllers
         {
             // Limite máximo permitido pela IGDB é 500
             if (limit > 500) limit = 500;
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Add("Client-ID", ClientId);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+            var client = await CreateIgdbClientAsync();
 
             var sb = new StringBuilder();
             // Se múltiplos ids forem informados, busca todos eles
@@ -129,9 +137,7 @@ namespace GamePadAPI.Controllers
         [HttpGet("platforms")]
         public async Task<IActionResult> GetPlatforms()
         {
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Add("Client-ID", ClientId);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+            var client = await CreateIgdbClientAsync();
 
             var query = "fields id,name,abbreviation,category,platform_family.name; limit 100;";
             var content = new StringContent(query, Encoding.UTF8, "text/plain");
@@ -143,9 +149,7 @@ namespace GamePadAPI.Controllers
         [HttpGet("genres")]
         public async Task<IActionResult> GetGenres()
         {
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Add("Client-ID", ClientId);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+            var client = await CreateIgdbClientAsync();
 
             var query = "fields id,name,slug; limit 100;";
             var content = new StringContent(query, Encoding.UTF8, "text/plain");

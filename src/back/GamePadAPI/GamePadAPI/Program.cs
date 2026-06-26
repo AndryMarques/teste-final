@@ -1,5 +1,6 @@
 using System.Text;
 using GamePad_TIDAI_2025.Models;
+using GamePadAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,7 +18,10 @@ namespace GamePadAPI
 
             builder.Services.AddHttpClient();
 
-            //Conex�o com o banco de dados
+            // Serviço que obtém/cacheia o App Access Token do IGDB (Twitch)
+            builder.Services.AddSingleton<IgdbTokenService>();
+
+            //Conexao com o banco de dados
 
             builder.Services.AddDbContext<AppDbContext>(opt =>
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -29,7 +33,11 @@ namespace GamePadAPI
                     "AllowFrontend",
                     policy =>
                         policy
-                            .WithOrigins("https://game-pad-ruby.vercel.app/")
+                            .WithOrigins(
+                                "https://game-pad-ruby.vercel.app",
+                                "http://localhost:5173",
+                                "http://localhost:3000"
+                            )
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                 );

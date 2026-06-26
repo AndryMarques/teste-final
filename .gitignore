@@ -16,6 +16,9 @@ TestResults/
 
 .fake
 
+# Segredos locais (IGDB Client Secret, etc.) - nao versionar
+appsettings.Development.json
+
 # Docker (Andry)
 
 .dockerignore
