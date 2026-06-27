@@ -54,8 +54,7 @@ dotnet test GamePadAPI.Tests/GamePadAPI.Tests.csproj
 ### Testes funcionais Selenium (CT11–CT20)
 
 Dirigem o **Microsoft Edge** sobre o front-end (Vite) + back-end locais. São propositalmente
-**lentos e visíveis** (janela 1920×1080, pausas e destaque dos elementos) para facilitar a
-gravação do vídeo. Pré-requisitos e detalhes de cada caso no
+**lentos e visíveis** Pré-requisitos e detalhes de cada caso no
 **[README da suíte Selenium](src/back/GamePadAPI/GamePadAPI.SeleniumTests/README.md)**.
 
 ```bash
