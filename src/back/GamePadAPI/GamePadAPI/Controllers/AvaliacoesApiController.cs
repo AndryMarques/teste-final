@@ -61,17 +61,21 @@ namespace GamePadAPI.Controllers
             return avaliacao;
         }
 
+        // Regra de negócio: um comentário só é válido se vier acompanhado de uma nota maior que zero.
+        // (Permite-se nota sem comentário, mas não comentário sem nota.)
+        private static bool ComentarioSemNota(Avaliacao avaliacao) =>
+            !string.IsNullOrWhiteSpace(avaliacao.Comentario)
+            && (string.IsNullOrWhiteSpace(avaliacao.Nota) || avaliacao.Nota == "0");
+
         // POST: api/AvaliacoesApi
         [HttpPost]
         public async Task<ActionResult<Avaliacao>> PostAvaliacao(Avaliacao avaliacao)
         {
-            // Permite avaliação por estrelas sem comentário
-            // mas se enviar comentario nota deve ser maior que zero
-            if (!string.IsNullOrWhiteSpace(avaliacao.Comentario) && (string.IsNullOrWhiteSpace(avaliacao.Nota) || avaliacao.Nota == "0"))
+            if (ComentarioSemNota(avaliacao))
             {
                 return BadRequest("Para comentar, é necessário dar uma nota ao jogo.");
             }
-            // Permite nota sem comentrio
+
             _context.Avaliacoes.Add(avaliacao);
             await _context.SaveChangesAsync();
 

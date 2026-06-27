@@ -31,7 +31,7 @@ Os testes rodam **em ordem** (CT11 → CT20), um por vez, com o Edge visível. B
 | Variável        | Padrão                  | Para que serve                                   |
 |-----------------|-------------------------|--------------------------------------------------|
 | `BASE_URL`      | `http://localhost:5173` | URL do front-end                                 |
-| `PAUSE_MS`      | `1000`                  | Pausa entre as ações (aumente para vídeo mais lento) |
+| `PAUSE_MS`      | `1000`                  | Pausa entre as ações                             |
 | `TYPE_DELAY_MS` | `70`                    | Atraso entre cada caractere digitado             |
 | `HEADLESS`      | (desligado)             | `HEADLESS=1` roda sem janela (validação rápida)  |
 | `SHOT_DIR`      | (desligado)             | Pasta para salvar screenshot/HTML ao fim de cada teste (diagnóstico) |

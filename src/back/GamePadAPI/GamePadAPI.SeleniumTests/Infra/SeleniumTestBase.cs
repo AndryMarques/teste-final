@@ -32,8 +32,8 @@ namespace GamePadAPI.SeleniumTests.Infra
         protected SeleniumTestBase()
         {
             BaseUrl = (Environment.GetEnvironmentVariable("BASE_URL") ?? "http://localhost:5173").TrimEnd('/');
-            _pauseMs = ReadInt("PAUSE_MS", 1000);
-            _typeDelayMs = ReadInt("TYPE_DELAY_MS", 70);
+            _pauseMs = ReadInt("PAUSE_MS", 100);
+            _typeDelayMs = ReadInt("TYPE_DELAY_MS", 20);
             var headless = Environment.GetEnvironmentVariable("HEADLESS") == "1";
 
             var options = new EdgeOptions();

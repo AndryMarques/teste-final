@@ -125,22 +125,16 @@ namespace GamePadAPI.Controllers
                 return NotFound();
 
             // Se for alterar o e-mail, verifica se já existe outro usuário com o mesmo e-mail
-            if (!string.IsNullOrWhiteSpace(dto.Email) && dto.Email.ToLower() != usuarioDb.Email.ToLower())
+            if (!string.IsNullOrWhiteSpace(dto.Email) && dto.Email.ToLower() != usuarioDb.Email.ToLower()
+                && await EmailJaCadastrado(dto.Email, id))
             {
-                var emailExists = await _context.Usuarios.AnyAsync(u => u.Email.ToLower() == dto.Email.ToLower() && u.Id != id);
-                if (emailExists)
-                {
-                    return BadRequest(new { message = "Já existe um usuário cadastrado com este e-mail." });
-                }
+                return BadRequest(new { message = "Já existe um usuário cadastrado com este e-mail." });
             }
             // Se for alterar o nome, verifica se já existe outro usuário com o mesmo nome
-            if (!string.IsNullOrWhiteSpace(dto.Nome) && dto.Nome.ToLower() != usuarioDb.Nome.ToLower())
+            if (!string.IsNullOrWhiteSpace(dto.Nome) && dto.Nome.ToLower() != usuarioDb.Nome.ToLower()
+                && await NomeJaCadastrado(dto.Nome, id))
             {
-                var nomeExists = await _context.Usuarios.AnyAsync(u => u.Nome.ToLower() == dto.Nome.ToLower() && u.Id != id);
-                if (nomeExists)
-                {
-                    return BadRequest(new { message = "Já existe um usuário cadastrado com este nome de usuário." });
-                }
+                return BadRequest(new { message = "Já existe um usuário cadastrado com este nome de usuário." });
             }
             if (!string.IsNullOrWhiteSpace(dto.Nome)) usuarioDb.Nome = dto.Nome;
             if (!string.IsNullOrWhiteSpace(dto.Bio)) usuarioDb.Bio = dto.Bio;
@@ -169,22 +163,25 @@ namespace GamePadAPI.Controllers
             return NoContent();
         }
 
+        // Verifica se já existe outro usuário com o mesmo e-mail (case-insensitive).
+        // ignorarId permite desconsiderar o próprio registro durante uma atualização.
+        private Task<bool> EmailJaCadastrado(string email, int ignorarId = 0) =>
+            _context.Usuarios.AnyAsync(u => u.Email.ToLower() == email.ToLower() && u.Id != ignorarId);
+
+        // Verifica se já existe outro usuário com o mesmo nome (case-insensitive).
+        private Task<bool> NomeJaCadastrado(string nome, int ignorarId = 0) =>
+            _context.Usuarios.AnyAsync(u => u.Nome.ToLower() == nome.ToLower() && u.Id != ignorarId);
+
         // POST: api/Usuarios
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            // Verifica se já existe usuário com o mesmo e-mail (case-insensitive)
-            var emailExists = await _context.Usuarios.AnyAsync(u => u.Email.ToLower() == usuario.Email.ToLower());
-            if (emailExists)
-            {
+            if (await EmailJaCadastrado(usuario.Email))
                 return BadRequest(new { message = "Já existe um usuário cadastrado com este e-mail." });
-            }
-            // Verifica se já existe usuário com o mesmo nome (case-insensitive)
-            var nomeExists = await _context.Usuarios.AnyAsync(u => u.Nome.ToLower() == usuario.Nome.ToLower());
-            if (nomeExists)
-            {
+
+            if (await NomeJaCadastrado(usuario.Nome))
                 return BadRequest(new { message = "Já existe um usuário cadastrado com este nome de usuário." });
-            }
+
             usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
             if (string.IsNullOrWhiteSpace(usuario.ImgUser))
             {
