@@ -83,9 +83,9 @@ namespace GamePadAPI.Tests
 
             var salvo = await context.Usuarios.FirstOrDefaultAsync(u => u.Email == "novo@teste.com");
             Assert.NotNull(salvo);
-            Assert.NotEqual("senhaForte1", salvo.Senha); // senha não fica em texto puro
-            Assert.True(BCrypt.Net.BCrypt.Verify("senhaForte1", salvo.Senha)); // hash válido
-            Assert.Equal("/profile-images/default-profile.png", salvo.ImgUser); // imagem padrão
+            Assert.NotEqual("senhaForte1", salvo.Senha);
+            Assert.True(BCrypt.Net.BCrypt.Verify("senhaForte1", salvo.Senha)); 
+            Assert.Equal("/profile-images/default-profile.png", salvo.ImgUser); 
         }
 
         // CT04 – Autenticação com credenciais válidas: gera token JWT.

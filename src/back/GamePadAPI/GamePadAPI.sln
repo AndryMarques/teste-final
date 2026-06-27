@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePadAPI", "GamePadAPI\Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePadAPI.Tests", "GamePadAPI.Tests\GamePadAPI.Tests.csproj", "{0CE9E61C-1D5E-442C-AAB2-94DB062148C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePadAPI.SeleniumTests", "GamePadAPI.SeleniumTests\GamePadAPI.SeleniumTests.csproj", "{55AA265A-EEE2-4A88-B151-4E286BED69ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{0CE9E61C-1D5E-442C-AAB2-94DB062148C7}.Release|x64.Build.0 = Release|Any CPU
 		{0CE9E61C-1D5E-442C-AAB2-94DB062148C7}.Release|x86.ActiveCfg = Release|Any CPU
 		{0CE9E61C-1D5E-442C-AAB2-94DB062148C7}.Release|x86.Build.0 = Release|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Debug|x64.Build.0 = Debug|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Debug|x86.Build.0 = Debug|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Release|x64.ActiveCfg = Release|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Release|x64.Build.0 = Release|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Release|x86.ActiveCfg = Release|Any CPU
+		{55AA265A-EEE2-4A88-B151-4E286BED69ED}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -81,7 +81,7 @@ namespace GamePadAPI.Tests
             var ok = Assert.IsType<OkObjectResult>(resultado.Result);
             var itens = ((IEnumerable)ok.Value).Cast<object>().ToList();
 
-            Assert.Single(itens); // apenas o Jogo B passa no filtro
+            Assert.Single(itens);
             var item = itens[0];
             Assert.Equal(2L, ObjectReader.Get<long?>(item, "IgdbGameId"));
             Assert.Equal(5d, ObjectReader.Get<double>(item, "Media"));
